@@ -1,7 +1,7 @@
 package com.example.manageequipment.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,24 +19,30 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 50, message = "Name should be less than 50 characters")
     private String firstName;
 
+    @Size(max = 50, message = "Name should be less than 50 characters")
     private String lastName;
 
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
+    @NotNull(message = "Email shouldn't be null!!")
+    @Column(unique = true)
     private String email;
 
+
+    @Size(min = 5, message = "Name should be at least 5 characters")
+    @Size(max = 50, message = "Name should be less than 50 characters")
+    @NotBlank(message = "Name shouldn't be blank!!")
     private String address;
 
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private Set<Equipment> equipments = new HashSet<>();
 
-//    @ManyToMany( fetch = FetchType.LAZY)
-//    @JoinTable(name = "transferHistory",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "equipment_id"))
-//    @JsonIgnore
-//    private Set<Equipment> transferHistory = new HashSet<>();
+    @ManyToMany(mappedBy = "transferredUser")
+    @JsonIgnore
+    private Set<Equipment> transferredEquipment = new HashSet<>();
 
     @Override
     public String toString() {

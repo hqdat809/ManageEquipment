@@ -1,6 +1,7 @@
 package com.example.manageequipment.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,13 +24,21 @@ public class Equipment {
 
     private String name;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "imageData", referencedColumnName = "id")
+    private ImageData imageData;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner = null;
 
-//    @ManyToMany(mappedBy = "transferHistory")
-//    @JsonBackReference
-//    private Set<User> historyTransfer = new HashSet<>();
+
+    @ManyToMany( fetch = FetchType.LAZY)
+    @JoinTable(name = "transferHistory",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "equipment_id"))
+    @JsonIgnore
+    private Set<User> transferredUser = new HashSet<>();
 
     @Override
     public String toString() {

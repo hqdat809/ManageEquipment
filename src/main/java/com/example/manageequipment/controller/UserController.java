@@ -4,6 +4,7 @@ import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.User;
 import com.example.manageequipment.service.UserService;
 import com.example.manageequipment.type.IntegerArrayRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,7 +20,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user) , HttpStatus.CREATED);
     }
 
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("/update/{userId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto user) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @Valid @RequestBody UserDto user) {
         return new ResponseEntity<>(userService.updateUser(userId, user), HttpStatus.OK);
     }
 

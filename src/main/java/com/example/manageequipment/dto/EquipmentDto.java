@@ -1,6 +1,10 @@
 package com.example.manageequipment.dto;
 
+import com.example.manageequipment.model.ImageData;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -10,5 +14,7 @@ import lombok.*;
 public class EquipmentDto {
     private Long id;
     private String name;
+    private String imageUrl;
     private Long ownerId;
+    private List<Long> transferredUserIds = new ArrayList<>();
 }

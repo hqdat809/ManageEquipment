@@ -5,11 +5,14 @@ import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
 import com.example.manageequipment.service.EquipmentService;
 import com.example.manageequipment.type.IntegerArrayRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,9 +22,9 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     @PostMapping("/create")
-    public ResponseEntity<EquipmentDto> createEquipment(@RequestBody Equipment equipment) {
+    public ResponseEntity<EquipmentDto> createEquipment(@ModelAttribute Equipment equipment, @ModelAttribute MultipartFile image, HttpServletRequest request) throws IOException {
         System.out.println(equipment);
-        return new ResponseEntity<>(equipmentService.createEquipment(equipment), HttpStatus.CREATED);
+        return new ResponseEntity<>(equipmentService.createEquipment(equipment, image, request), HttpStatus.CREATED);
     }
 
     @GetMapping("/equipments")
