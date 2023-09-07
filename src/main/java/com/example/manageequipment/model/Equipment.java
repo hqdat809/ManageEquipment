@@ -35,8 +35,8 @@ public class Equipment {
 
     @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(name = "transferHistory",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "equipment_id"))
+            joinColumns = @JoinColumn(name = "equipment_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     @JsonIgnore
     private Set<User> transferredUser = new HashSet<>();
 

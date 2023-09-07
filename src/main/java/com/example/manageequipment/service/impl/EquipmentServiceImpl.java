@@ -10,7 +10,6 @@ import com.example.manageequipment.repository.ImageRepository;
 import com.example.manageequipment.repository.UserRepository;
 import com.example.manageequipment.service.EquipmentService;
 import com.example.manageequipment.util.ImageUtils;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -64,9 +63,7 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public EquipmentDto createEquipment(Equipment equipment, MultipartFile image, HttpServletRequest request) throws IOException {
-        System.out.println(image == null);
-
+    public EquipmentDto createEquipment(Equipment equipment, MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
             ImageData imageData = ImageData.builder()
                     .name(image.getOriginalFilename())
@@ -77,6 +74,8 @@ public class EquipmentServiceImpl implements EquipmentService {
             equipment.setImageData(imageData);
 
             Equipment equipmentCreated = equipmentRepository.save(equipment);
+
+            System.out.println("equipment" +equipmentCreated);
 
             return mapToDto(equipmentCreated);
         }
@@ -99,12 +98,21 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public EquipmentDto updateEquipment(Long equipmentId, EquipmentDto equipmentDto) {
+    public EquipmentDto updateEquipment(Long equipmentId, EquipmentDto equipmentDto, MultipartFile image) throws IOException {
         Equipment equipment = equipmentRepository.findById(equipmentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid equipment id" + equipmentId));
 
         if (equipmentDto.getName() != null) {
             equipment.setName(equipmentDto.getName());
+        }
+
+        if (image != null && !image.isEmpty()) {
+            ImageData imageData = equipment.getImageData();
+            imageData.setName(image.getOriginalFilename());
+            imageData.setType(image.getContentType());
+            imageData.setImageData(ImageUtils.compressImage(image.getBytes()));
+
+            imageRepository.save(imageData);
         }
 
         Equipment equipmentUpdated = equipmentRepository.save(equipment);
@@ -117,7 +125,8 @@ public class EquipmentServiceImpl implements EquipmentService {
         ids.forEach(id -> {
             Equipment equipment = equipmentRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid equipment id " + id));
-
+            ImageData imageData = equipment.getImageData(); 
+            imageRepository.delete(imageData);
             equipmentRepository.delete(equipment);
         });
     }

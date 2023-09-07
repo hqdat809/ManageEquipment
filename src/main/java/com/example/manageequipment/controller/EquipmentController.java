@@ -22,9 +22,9 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     @PostMapping("/create")
-    public ResponseEntity<EquipmentDto> createEquipment(@ModelAttribute Equipment equipment, @ModelAttribute MultipartFile image, HttpServletRequest request) throws IOException {
+    public ResponseEntity<EquipmentDto> createEquipment(@ModelAttribute Equipment equipment, @ModelAttribute MultipartFile image) throws IOException {
         System.out.println(equipment);
-        return new ResponseEntity<>(equipmentService.createEquipment(equipment, image, request), HttpStatus.CREATED);
+        return new ResponseEntity<>(equipmentService.createEquipment(equipment, image), HttpStatus.CREATED);
     }
 
     @GetMapping("/equipments")
@@ -33,8 +33,8 @@ public class EquipmentController {
     }
 
     @PostMapping("/update/{equipmentId}")
-    public ResponseEntity<EquipmentDto> updateEquipment(@PathVariable Long equipmentId, @RequestBody EquipmentDto equipmentDto) {
-        return new ResponseEntity<>(equipmentService.updateEquipment(equipmentId, equipmentDto), HttpStatus.OK);
+    public ResponseEntity<EquipmentDto> updateEquipment(@PathVariable Long equipmentId, @ModelAttribute EquipmentDto equipmentDto, @ModelAttribute MultipartFile image) throws IOException {
+        return new ResponseEntity<>(equipmentService.updateEquipment(equipmentId, equipmentDto, image), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
