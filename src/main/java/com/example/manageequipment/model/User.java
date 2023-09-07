@@ -31,9 +31,7 @@ public class User {
     private String email;
 
 
-    @Size(min = 5, message = "Name should be at least 5 characters")
     @Size(max = 50, message = "Name should be less than 50 characters")
-    @NotBlank(message = "Name shouldn't be blank!!")
     private String address;
 
     @JsonIgnore
