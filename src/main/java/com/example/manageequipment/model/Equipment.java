@@ -40,6 +40,8 @@ public class Equipment {
     @JsonIgnore
     private Set<User> transferredUser = new HashSet<>();
 
+    private String imageUrl;
+
     @Override
     public String toString() {
         return "Equipment{" +

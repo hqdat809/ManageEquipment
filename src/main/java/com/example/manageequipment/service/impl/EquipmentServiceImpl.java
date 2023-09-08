@@ -46,9 +46,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         EquipmentDto equipmentDto = new EquipmentDto();
         equipmentDto.setId(equipment.getId());
         equipmentDto.setName(equipment.getName());
-        if (equipment.getImageData() != null) {
-            equipmentDto.setImageUrl("https://manageequipment-production.up.railway.app" + "/api/image/" + equipment.getImageData().getId());
-        }
+        equipmentDto.setImageUrl(equipment.getImageUrl());
 
         if (equipment.getOwner() != null) {
             equipmentDto.setOwnerId(equipment.getOwner().getId());
@@ -71,23 +69,17 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public EquipmentDto createEquipment(Equipment equipment, MultipartFile image) throws IOException {
         if (!image.isEmpty()) {
-            ImageData imageData = ImageData.builder()
-                    .name(image.getOriginalFilename())
-                    .type(image.getContentType())
-                    .imageData(ImageUtils.compressImage(image.getBytes())).build();
-
-            imageRepository.save(imageData);
-            equipment.setImageData(imageData);
-
-            Equipment equipmentCreated = equipmentRepository.save(equipment);
 
             Map r = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
 
-            String img = (String) r.get("secure_url");
+            String imgUrl = (String) r.get("secure_url");
 
             System.out.println("====================================================");
-            System.out.println("image url: "+ img);
+            System.out.println("image url: "+ imgUrl);
             System.out.println("====================================================");
+            equipment.setImageUrl(imgUrl);
+
+            Equipment equipmentCreated = equipmentRepository.save(equipment);
 
             return mapToDto(equipmentCreated);
         }
@@ -119,12 +111,15 @@ public class EquipmentServiceImpl implements EquipmentService {
         }
 
         if (image != null && !image.isEmpty()) {
-            ImageData imageData = equipment.getImageData();
-            imageData.setName(image.getOriginalFilename());
-            imageData.setType(image.getContentType());
-            imageData.setImageData(ImageUtils.compressImage(image.getBytes()));
 
-            imageRepository.save(imageData);
+            Map r = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+
+            String imgUrl = (String) r.get("secure_url");
+
+            System.out.println("====================================================");
+            System.out.println("image url: "+ imgUrl);
+            System.out.println("====================================================");
+            equipment.setImageUrl(imgUrl);
         }
 
         Equipment equipmentUpdated = equipmentRepository.save(equipment);
