@@ -24,9 +24,9 @@ public class Equipment {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "imageData", referencedColumnName = "id")
-    private ImageData imageData;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "imageData", referencedColumnName = "id")
+//    private ImageData imageData;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", referencedColumnName = "id")

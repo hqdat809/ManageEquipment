@@ -5,13 +5,10 @@ import com.cloudinary.utils.ObjectUtils;
 import com.example.manageequipment.dto.EquipmentDto;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
-import com.example.manageequipment.model.ImageData;
 import com.example.manageequipment.model.User;
 import com.example.manageequipment.repository.EquipmentRepository;
-import com.example.manageequipment.repository.ImageRepository;
 import com.example.manageequipment.repository.UserRepository;
 import com.example.manageequipment.service.EquipmentService;
-import com.example.manageequipment.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -38,9 +35,6 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private UserServiceImpl userService;
-
-    @Autowired
-    private ImageRepository imageRepository;
 
     public EquipmentDto mapToDto(Equipment equipment) {
         EquipmentDto equipmentDto = new EquipmentDto();
@@ -132,8 +126,6 @@ public class EquipmentServiceImpl implements EquipmentService {
         ids.forEach(id -> {
             Equipment equipment = equipmentRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid equipment id " + id));
-            ImageData imageData = equipment.getImageData(); 
-            imageRepository.delete(imageData);
             equipmentRepository.delete(equipment);
         });
     }

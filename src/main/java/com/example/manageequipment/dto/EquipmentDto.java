@@ -1,6 +1,5 @@
 package com.example.manageequipment.dto;
 
-import com.example.manageequipment.model.ImageData;
 import lombok.*;
 
 import java.util.ArrayList;
