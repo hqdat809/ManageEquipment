@@ -41,7 +41,7 @@ public class EquipmentServiceImpl implements EquipmentService {
         equipmentDto.setId(equipment.getId());
         equipmentDto.setName(equipment.getName());
         if (equipment.getImageData() != null) {
-            equipmentDto.setImageUrl("http://localhost:9090/api/image/" + equipment.getImageData().getId());
+            equipmentDto.setImageUrl("https://manageequipment-production.up.railway.app/" + "/api/image/" + equipment.getImageData().getId());
         }
 
         if (equipment.getOwner() != null) {
