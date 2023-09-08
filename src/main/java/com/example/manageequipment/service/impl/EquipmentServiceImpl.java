@@ -1,5 +1,7 @@
 package com.example.manageequipment.service.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.example.manageequipment.dto.EquipmentDto;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
@@ -19,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -26,6 +29,9 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Autowired
     private EquipmentRepository equipmentRepository;
+
+    @Autowired
+    Cloudinary cloudinary;
 
     @Autowired
     private UserRepository userRepository;
@@ -75,7 +81,13 @@ public class EquipmentServiceImpl implements EquipmentService {
 
             Equipment equipmentCreated = equipmentRepository.save(equipment);
 
-            System.out.println("equipment" +equipmentCreated);
+            Map r = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+
+            String img = (String) r.get("secure_url");
+
+            System.out.println("====================================================");
+            System.out.println("image url: "+ img);
+            System.out.println("====================================================");
 
             return mapToDto(equipmentCreated);
         }
