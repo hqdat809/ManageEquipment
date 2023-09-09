@@ -62,7 +62,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public EquipmentDto createEquipment(Equipment equipment, MultipartFile image) throws IOException {
-        if (!image.isEmpty()) {
+        if (image != null && !image.isEmpty()) {
 
             Map r = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
 
