@@ -36,7 +36,6 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private UserServiceImpl userService;
 
-    private
 
     public EquipmentDto mapToDto(Equipment equipment) {
         EquipmentDto equipmentDto = new EquipmentDto();
