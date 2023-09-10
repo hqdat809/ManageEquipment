@@ -17,4 +17,6 @@ public class UserDto {
     private String address;
     private String email;
     private List<Long> equipmentIds;
+    private List<Long> transferredEquipIds;
+
 }

@@ -35,7 +35,11 @@ public class UserServiceImpl implements UserService {
         List<Long> equipmentIds = new ArrayList<>();
         user.getEquipments().forEach(e -> equipmentIds.add(e.getId()));
 
+        List<Long> transferredEquipIds = new ArrayList<>();
+        user.getTransferredEquipment().forEach(e -> transferredEquipIds.add(e.getId()));
+
         userDto.setEquipmentIds(equipmentIds);
+        userDto.setTransferredEquipIds(transferredEquipIds);
         return userDto;
     }
 
@@ -92,6 +96,15 @@ public class UserServiceImpl implements UserService {
                 equip.setOwner(null);
                 equipmentRepository.save(equip);
             });
+
+            Set<Equipment> transferredEquip = user.getTransferredEquipment();
+            transferredEquip.forEach(equip -> {
+                Set<User> users = equip.getTransferredUser();
+                users.remove(user);
+                equip.setTransferredUser(users);
+                equipmentRepository.save(equip);
+            });
+
             userRepository.delete(user);
         });
 
