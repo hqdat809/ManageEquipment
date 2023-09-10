@@ -36,6 +36,8 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private UserServiceImpl userService;
 
+    private
+
     public EquipmentDto mapToDto(Equipment equipment) {
         EquipmentDto equipmentDto = new EquipmentDto();
         equipmentDto.setId(equipment.getId());
@@ -126,6 +128,12 @@ public class EquipmentServiceImpl implements EquipmentService {
         ids.forEach(id -> {
             Equipment equipment = equipmentRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid equipment id " + id));
+            User owner = userRepository.findById(equipment.getOwner().getId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user id "));
+            Set<Equipment> equipments = owner.getEquipments();
+            equipments.remove(owner);
+            owner.setEquipments(equipments);
+            userRepository.save(owner);
             equipmentRepository.delete(equipment);
         });
     }

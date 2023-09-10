@@ -1,6 +1,7 @@
 package com.example.manageequipment.service.impl;
 
 import com.example.manageequipment.dto.UserDto;
+import com.example.manageequipment.model.Equipment;
 import com.example.manageequipment.model.User;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.UserRepository;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -85,7 +87,11 @@ public class UserServiceImpl implements UserService {
         userIds.stream().forEach(id -> {
             User user = userRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user id "+ id));
-
+            Set<Equipment> equipments = user.getEquipments();
+            equipments.forEach(equip -> {
+                equip.setOwner(null);
+                equipmentRepository.save(equip);
+            });
             userRepository.delete(user);
         });
 
