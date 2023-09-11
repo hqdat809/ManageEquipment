@@ -13,6 +13,8 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://127.0.0.1:5173"); // Replace with your frontend's URL
         configuration.addAllowedOrigin("http://127.0.0.1:5174"); // Replace with your frontend's URL
+        configuration.addAllowedOrigin("https://manage-equipment-fe-y69j.vercel.app/");
+        configuration.addAllowedOrigin("*");
         configuration.addAllowedMethod("*"); // Allow all HTTP methods
         configuration.addAllowedHeader("*"); // Allow all headers
         configuration.setAllowCredentials(true); // Allow sending cookies and authentication headers
