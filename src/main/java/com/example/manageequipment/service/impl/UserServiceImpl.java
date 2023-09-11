@@ -97,6 +97,12 @@ public class UserServiceImpl implements UserService {
                 equipmentRepository.save(equip);
             });
 
+            if (user.getTransferredEquipment() != null) {
+                for (Equipment equip : user.getTransferredEquipment()) {
+                    equip.getTransferredUser().remove(user);
+                }
+            }
+
 //            Set<Equipment> transferredEquip = user.getTransferredEquipment();
 //            transferredEquip.forEach(equip -> {
 //                Set<User> users = equip.getTransferredUser();

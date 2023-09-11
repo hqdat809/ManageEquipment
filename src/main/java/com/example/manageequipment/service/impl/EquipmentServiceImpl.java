@@ -136,6 +136,12 @@ public class EquipmentServiceImpl implements EquipmentService {
                 userRepository.save(owner);
             }
 
+            if (equipment.getTransferredUser() != null) {
+                for (User u : equipment.getTransferredUser()) {
+                    u.getTransferredEquipment().remove(equipment);
+                }
+            }
+
 //            Set<User> users = equipment.getTransferredUser();
 //            users.forEach(u -> {
 //                Set<Equipment> transferredEquipment = u.getTransferredEquipment();

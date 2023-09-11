@@ -33,7 +33,7 @@ public class Equipment {
     private User owner = null;
 
 
-    @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(name = "transferHistory",
             joinColumns = @JoinColumn(name = "equipment_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
