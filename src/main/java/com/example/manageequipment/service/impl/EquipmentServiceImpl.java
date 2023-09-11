@@ -132,8 +132,6 @@ public class EquipmentServiceImpl implements EquipmentService {
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user id "));
                 Set<Equipment> equipments = owner.getEquipments();
                 equipments.remove(owner);
-                owner.setEquipments(equipments);
-                userRepository.save(owner);
             }
 
             if (equipment.getTransferredUser() != null) {
