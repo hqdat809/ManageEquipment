@@ -127,12 +127,23 @@ public class EquipmentServiceImpl implements EquipmentService {
         ids.forEach(id -> {
             Equipment equipment = equipmentRepository.findById(id)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid equipment id " + id));
-            User owner = userRepository.findById(equipment.getOwner().getId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user id "));
-            Set<Equipment> equipments = owner.getEquipments();
-            equipments.remove(owner);
-            owner.setEquipments(equipments);
-            userRepository.save(owner);
+            if (equipment.getOwner() != null) {
+                User owner = userRepository.findById(equipment.getOwner().getId())
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid user id "));
+                Set<Equipment> equipments = owner.getEquipments();
+                equipments.remove(owner);
+                owner.setEquipments(equipments);
+                userRepository.save(owner);
+            }
+
+            Set<User> users = equipment.getTransferredUser();
+            users.forEach(u -> {
+                Set<Equipment> transferredUser = u.getTransferredEquipment();
+                transferredUser.remove(equipment);
+                u.setTransferredEquipment(transferredUser);
+                userRepository.save(u);
+            });
+
             equipmentRepository.delete(equipment);
         });
     }
