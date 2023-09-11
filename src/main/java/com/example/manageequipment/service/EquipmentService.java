@@ -1,6 +1,7 @@
 package com.example.manageequipment.service;
 
 import com.example.manageequipment.dto.EquipmentDto;
+import com.example.manageequipment.dto.EquipmentResponse;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,8 @@ import java.util.List;
 
 @Service
 public interface EquipmentService {
+
+
     EquipmentDto createEquipment(Equipment equipment, MultipartFile file) throws IOException;
 
     List<EquipmentDto> getAllEquipment();
@@ -20,4 +23,6 @@ public interface EquipmentService {
     void deleteEquipment(List<Long> ids);
 
     UserDto transferEquipment(List<Long> equipmentIds, Long userId);
+
+    EquipmentResponse getEquipmentByPage(int pageNo, int pageSize);
 }

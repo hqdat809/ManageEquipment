@@ -3,6 +3,7 @@ package com.example.manageequipment.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.manageequipment.dto.EquipmentDto;
+import com.example.manageequipment.dto.EquipmentResponse;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
 import com.example.manageequipment.model.User;
@@ -10,6 +11,9 @@ import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.UserRepository;
 import com.example.manageequipment.service.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -172,5 +176,27 @@ public class EquipmentServiceImpl implements EquipmentService {
             equipmentRepository.save(equipment);
         });
         return userService.mapToDto(userData);
+    }
+
+    @Override
+    public EquipmentResponse getEquipmentByPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Equipment> equipmentData = equipmentRepository.findAll(pageable);
+
+//      Map to CourseResponse
+        List<Equipment> listEquipData = equipmentData.getContent();
+        List<EquipmentDto> content = new ArrayList<>();
+        for (Equipment equip:listEquipData) {
+            content.add(mapToDto(equip));
+        }
+        EquipmentResponse equipmentResponse = new EquipmentResponse();
+        equipmentResponse.setContent(content);
+        equipmentResponse.setPageNo(equipmentData.getNumber());
+        equipmentResponse.setPageSize(equipmentData.getSize());
+        equipmentResponse.setTotalPages(equipmentData.getTotalPages());
+        equipmentResponse.setTotalElements(equipmentData.getTotalElements());
+        equipmentResponse.setLast(equipmentData.isLast());
+
+        return equipmentResponse;
     }
 }

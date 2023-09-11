@@ -6,7 +6,6 @@ import com.example.manageequipment.model.User;
 import com.example.manageequipment.repository.EquipmentRepository;
 import com.example.manageequipment.repository.UserRepository;
 import com.example.manageequipment.service.UserService;
-import com.example.manageequipment.type.IntegerArrayRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

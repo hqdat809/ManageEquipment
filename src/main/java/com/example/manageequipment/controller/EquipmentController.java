@@ -1,6 +1,7 @@
 package com.example.manageequipment.controller;
 
 import com.example.manageequipment.dto.EquipmentDto;
+import com.example.manageequipment.dto.EquipmentResponse;
 import com.example.manageequipment.dto.UserDto;
 import com.example.manageequipment.model.Equipment;
 import com.example.manageequipment.service.EquipmentService;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +32,13 @@ public class EquipmentController {
     @GetMapping("/equipments")
     public ResponseEntity<List<EquipmentDto>> getEquipments() {
         return new ResponseEntity<>(equipmentService.getAllEquipment(), HttpStatus.OK);
+    }
+
+    @GetMapping("/equipments-by-page")
+    public ResponseEntity<EquipmentResponse> getEquipmentByPage(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "0", required = false) int pageSize) {
+        return new ResponseEntity<>(equipmentService.getEquipmentByPage( pageNo, pageSize), HttpStatus.OK);
     }
 
     @PostMapping("/update/{equipmentId}")
