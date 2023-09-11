@@ -28,7 +28,7 @@ public class Equipment {
 //    @JoinColumn(name = "imageData", referencedColumnName = "id")
 //    private ImageData imageData;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner = null;
 
