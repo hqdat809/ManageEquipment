@@ -38,7 +38,7 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private Set<Equipment> equipments = new HashSet<>();
 
-    @ManyToMany(mappedBy = "transferredUser", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "transferredUser", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Equipment> transferredEquipment = new HashSet<>();
 
