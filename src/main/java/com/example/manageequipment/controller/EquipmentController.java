@@ -30,8 +30,10 @@ public class EquipmentController {
     }
 
     @GetMapping("/equipments")
-    public ResponseEntity<List<EquipmentDto>> getEquipments() {
-        return new ResponseEntity<>(equipmentService.getAllEquipment(), HttpStatus.OK);
+    public ResponseEntity<List<EquipmentDto>> getEquipments(
+            @RequestParam(value = "name", defaultValue = "0", required = false) String name
+    ) {
+        return new ResponseEntity<>(equipmentService.getAllEquipment(name), HttpStatus.OK);
     }
 
     @GetMapping("/equipments-by-page")

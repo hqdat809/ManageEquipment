@@ -16,7 +16,7 @@ public interface EquipmentService {
 
     EquipmentDto createEquipment(Equipment equipment, MultipartFile file) throws IOException;
 
-    List<EquipmentDto> getAllEquipment();
+    List<EquipmentDto> getAllEquipment(String name);
 
     EquipmentDto updateEquipment(Long equipmentId, EquipmentDto equipmentDto, MultipartFile image) throws IOException;
 

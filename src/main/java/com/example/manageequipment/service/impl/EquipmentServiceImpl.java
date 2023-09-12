@@ -92,8 +92,8 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public List<EquipmentDto> getAllEquipment() {
-        List<Equipment> equipmentList = equipmentRepository.findAll();
+    public List<EquipmentDto> getAllEquipment(String name) {
+        List<Equipment> equipmentList = equipmentRepository.findAllByName(name);
         List<EquipmentDto> equipmentDtos = new ArrayList<>();
         equipmentList.forEach(e -> equipmentDtos.add(mapToDto(e)));
 
