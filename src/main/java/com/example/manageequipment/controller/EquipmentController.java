@@ -38,9 +38,10 @@ public class EquipmentController {
 
     @GetMapping("/equipments-by-page")
     public ResponseEntity<EquipmentResponse> getEquipmentByPage(
+            @RequestParam(value = "name", defaultValue = "0", required = false) String name,
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "0", required = false) int pageSize) {
-        return new ResponseEntity<>(equipmentService.getEquipmentByPage( pageNo, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(equipmentService.getEquipmentByPage(name ,pageNo, pageSize), HttpStatus.OK);
     }
 
     @PostMapping("/update/{equipmentId}")

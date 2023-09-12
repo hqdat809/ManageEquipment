@@ -93,7 +93,7 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     @Override
     public List<EquipmentDto> getAllEquipment(String name) {
-        List<Equipment> equipmentList = equipmentRepository.findAllByName(name);
+        List<Equipment> equipmentList = equipmentRepository.findAllByNameContains(name);
         List<EquipmentDto> equipmentDtos = new ArrayList<>();
         equipmentList.forEach(e -> equipmentDtos.add(mapToDto(e)));
 
@@ -179,9 +179,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public EquipmentResponse getEquipmentByPage(int pageNo, int pageSize) {
+    public EquipmentResponse getEquipmentByPage(String name, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Equipment> equipmentData = equipmentRepository.findAll(pageable);
+        Page<Equipment> equipmentData = equipmentRepository.findByName(name, pageable);
 
 //      Map to CourseResponse
         List<Equipment> listEquipData = equipmentData.getContent();
