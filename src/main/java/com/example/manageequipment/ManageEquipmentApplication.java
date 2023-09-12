@@ -33,30 +33,30 @@ public class ManageEquipmentApplication {
         return new BCryptPasswordEncoder();
     }
 
-    //	@Bean
-    //    CommandLineRunner run(UserService userService) {
-    //		return args -> {
-    //            userService.saveRole(Role.builder().name("ADMIN").build());
-    //            userService.saveRole(Role.builder().name("USER").build());
-    //
-    //            userService.saveUser(User.builder()
-    //					.firstName("ha quoc")
-    //                    .lastName("dat")
-    //					.address("648 tay son")
-    //					.email("hqdat0809@gmail.com")
-    //					.password("0392338494")
-    //					.build());
-    //            userService.saveUser(User.builder()
-    //                    .firstName("ha quoc")
-    //                    .lastName("dat")
-    //                    .address("648 tay son")
-    //                    .email("hqdat08092001@gmail.com")
-    //                    .password("0392338494")
-    //                    .build());
-    //
-    //            userService.addRoleToStudent("hqdat0809@gmail.com", "ADMIN");
-    //            userService.addRoleToStudent("hqdat08092001@gmail.com", "USER");
-    //		};
-    //	}
+    	@Bean
+        CommandLineRunner run(UserService userService) {
+    		return args -> {
+                userService.saveRole(Role.builder().name("ADMIN").build());
+                userService.saveRole(Role.builder().name("USER").build());
+
+                userService.saveUser(User.builder()
+    					.firstName("ha quoc")
+                        .lastName("dat")
+    					.address("648 tay son")
+    					.email("hqdat0809@gmail.com")
+    					.password("0392338494")
+    					.build());
+                userService.saveUser(User.builder()
+                        .firstName("ha quoc")
+                        .lastName("dat")
+                        .address("648 tay son")
+                        .email("hqdat08092001@gmail.com")
+                        .password("0392338494")
+                        .build());
+
+                userService.addRoleToStudent("hqdat0809@gmail.com", "ADMIN");
+                userService.addRoleToStudent("hqdat08092001@gmail.com", "USER");
+    		};
+    	}
 
 }
