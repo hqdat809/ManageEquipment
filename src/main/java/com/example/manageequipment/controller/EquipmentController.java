@@ -31,14 +31,14 @@ public class EquipmentController {
 
     @GetMapping("/equipments")
     public ResponseEntity<List<EquipmentDto>> getEquipments(
-            @RequestParam(value = "name", defaultValue = "0", required = false) String name
+            @RequestParam(value = "name", defaultValue = "", required = false) String name
     ) {
         return new ResponseEntity<>(equipmentService.getAllEquipment(name), HttpStatus.OK);
     }
 
     @GetMapping("/equipments-by-page")
     public ResponseEntity<EquipmentResponse> getEquipmentByPage(
-            @RequestParam(value = "name", defaultValue = "0", required = false) String name,
+            @RequestParam(value = "name", defaultValue = "", required = false) String name,
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "0", required = false) int pageSize) {
         return new ResponseEntity<>(equipmentService.getEquipmentByPage(name ,pageNo, pageSize), HttpStatus.OK);

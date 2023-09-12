@@ -14,11 +14,12 @@ import java.util.List;
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
 //    List<Equipment> findAllByName(String name);
 
-    List<Equipment> findAllByNameContains(String name);
+//    @Query("SELECT e from Equipment e where e.name like %:name%")
+    List<Equipment> findByNameContaining(String name);
 
 
-    @Query(value = "SELECT * FROM EQUIPMENT WHERE NAME = ?1",
-            countQuery = "SELECT count(*) FROM EQUIPMENT WHERE NAME = ?1",
+    @Query(value = "SELECT * FROM EQUIPMENT WHERE NAME LIKE %:name%",
+            countQuery = "SELECT count(*) FROM EQUIPMENT WHERE LIKE %:name%",
             nativeQuery = true)
-    Page<Equipment> findByName(String lastname, Pageable pageable);
+    Page<Equipment> findByName(String name, Pageable pageable);
 }
