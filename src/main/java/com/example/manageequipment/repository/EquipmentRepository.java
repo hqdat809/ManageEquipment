@@ -12,11 +12,10 @@ import java.util.List;
 
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
-    List<Equipment> findAllByName(String name);
+//    List<Equipment> findAllByName(String name);
 
     List<Equipment> findAllByNameContains(String name);
 
-    Page<Equipment> findAllByNameContains2(String name);
 
     @Query(value = "SELECT * FROM EQUIPMENT WHERE NAME = ?1",
             countQuery = "SELECT count(*) FROM EQUIPMENT WHERE NAME = ?1",
