@@ -76,7 +76,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(User user) {
-        User createdUser = userRepository.save(user);
+        saveUser(user);
+        addRoleToStudent(user.getEmail(), "USER");
+        User createdUser = userRepository.findById(user.getId()).get();
         System.out.println("created user: "+ createdUser);
         return mapToDto(createdUser);
     }
