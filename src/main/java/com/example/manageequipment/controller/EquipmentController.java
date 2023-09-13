@@ -42,9 +42,10 @@ public class EquipmentController {
     @GetMapping("/equipments-by-page")
     public ResponseEntity<EquipmentResponse> getEquipmentByPage(
             @RequestParam(value = "name", defaultValue = "", required = false) String name,
+            @RequestParam(value = "ownerId", defaultValue = "0", required = false) int ownerId,
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = "0", required = false) int pageSize) {
-        return new ResponseEntity<>(equipmentService.getEquipmentByPage(name ,pageNo, pageSize), HttpStatus.OK);
+        return new ResponseEntity<>(equipmentService.getEquipmentByPage(name, ownerId ,pageNo, pageSize), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")

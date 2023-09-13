@@ -179,11 +179,15 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public EquipmentResponse getEquipmentByPage(String name, int pageNo, int pageSize) {
+    public EquipmentResponse getEquipmentByPage(String name, int ownerId, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Equipment> equipmentData = equipmentRepository.findByName(name, pageable);
+        Page<Equipment> equipmentData;
+        if (ownerId == 0) {
+            equipmentData = equipmentRepository.findByName(name, pageable);
+        } else  {
+            equipmentData = equipmentRepository.findByOwnerId(name, (long) ownerId, pageable);
+        }
 
-//      Map to CourseResponse
         List<Equipment> listEquipData = equipmentData.getContent();
         List<EquipmentDto> content = new ArrayList<>();
         for (Equipment equip:listEquipData) {

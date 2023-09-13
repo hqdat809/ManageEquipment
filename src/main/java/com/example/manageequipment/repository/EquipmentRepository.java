@@ -21,4 +21,9 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
             countQuery = "SELECT count(*) FROM equipment WHERE NAME LIKE %:name%",
             nativeQuery = true)
     Page<Equipment> findByName(String name, Pageable pageable);
+
+    @Query(value = "SELECT * FROM equipment e WHERE owner_id = :ownerId and NAME LIKE %:name%",
+            countQuery = "SELECT * FROM equipment WHERE owner_id = :ownerId and NAME LIKE %:name%",
+            nativeQuery = true)
+    Page<Equipment> findByOwnerId(String name, Long ownerId, Pageable pageable);
 }
