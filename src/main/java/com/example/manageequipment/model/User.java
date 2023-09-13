@@ -32,13 +32,13 @@ public class User implements UserDetails {
 
     @JsonBackReference
 //    @ValidPassword(message = "Password is invalid!!")
+    @NotNull(message = "Password shouldn't be null!!")
     private String password;
 
     @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     @NotNull(message = "Email shouldn't be null!!")
     @Column(unique = true)
     private String email;
-
 
     @Size(max = 50, message = "Name should be less than 50 characters")
     private String address;
@@ -57,9 +57,6 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
 //    @JsonBackReference
     private Set<Role> roles = new HashSet<>();
-
-
-
 
     @Override
     @JsonDeserialize(using = CustomAuthorityDeserializer.class)

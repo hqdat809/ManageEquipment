@@ -17,7 +17,6 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
 //    @Query("SELECT e from Equipment e where e.name like %:name%")
     List<Equipment> findByNameContaining(String name);
 
-
     @Query(value = "SELECT * FROM equipment WHERE NAME LIKE %:name%",
             countQuery = "SELECT count(*) FROM equipment WHERE NAME LIKE %:name%",
             nativeQuery = true)

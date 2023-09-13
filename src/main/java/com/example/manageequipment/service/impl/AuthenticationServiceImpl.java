@@ -36,24 +36,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationResponse adminAuthenticate(AuthenticationRequest authenticationRequest) {
-        System.out.println("authen: " + authenticationRequest.getEmail());
-        System.out.println("authen: " + authenticationRequest.getPassword());
         isAdmin = false;
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 authenticationRequest.getEmail(),
                 authenticationRequest.getPassword())
         );
-        System.out.println("authen 1");
 
         User user = userRepository.findByEmail(authenticationRequest.getEmail())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Email is incorrect!!"));
         List<Role> role = null;
-        System.out.println("authen 2");
         if(user != null) {
             role = roleCustomRepo.findRoleByEmail(user.getEmail()).stream().collect(Collectors.toList());
         }
 
-        System.out.println("authen 3");
         assert role != null;
         role.forEach(r -> {
             System.out.println("role: " + r.getName());

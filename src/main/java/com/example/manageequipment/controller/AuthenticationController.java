@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
     @Autowired
     AuthenticationService authenticationService;
-    @PostMapping(value = "/admin/login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(authenticationService.adminAuthenticate(authenticationRequest));
+                .body(authenticationService.userAuthenticate(authenticationRequest));
     }
 
     @PostMapping(value = "/user/login", produces = MediaType.APPLICATION_JSON_VALUE)

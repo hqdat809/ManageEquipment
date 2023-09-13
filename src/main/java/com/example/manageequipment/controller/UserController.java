@@ -21,21 +21,25 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user) {
         return new ResponseEntity<>(userService.createUser(user) , HttpStatus.CREATED);
     }
 
     @GetMapping("/users")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<UserDto>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @PostMapping("/update/{userId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @Valid @RequestBody UserDto user) {
         return new ResponseEntity<>(userService.updateUser(userId, user), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<String> deleteUser(@RequestBody IntegerArrayRequest userIds) {
         userService.deleteUser(userIds.getIds());
         return new ResponseEntity<>("Delete user success!!", HttpStatus.OK);

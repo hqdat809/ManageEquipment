@@ -23,12 +23,14 @@ public class EquipmentController {
     @Autowired
     private EquipmentService equipmentService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<EquipmentDto> createEquipment(@ModelAttribute Equipment equipment, @ModelAttribute MultipartFile image) throws IOException {
         System.out.println(equipment);
         return new ResponseEntity<>(equipmentService.createEquipment(equipment, image), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping("/equipments")
     public ResponseEntity<List<EquipmentDto>> getEquipments(
             @RequestParam(value = "name", defaultValue = "", required = false) String name
@@ -36,6 +38,7 @@ public class EquipmentController {
         return new ResponseEntity<>(equipmentService.getAllEquipment(name), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     @GetMapping("/equipments-by-page")
     public ResponseEntity<EquipmentResponse> getEquipmentByPage(
             @RequestParam(value = "name", defaultValue = "", required = false) String name,
@@ -44,11 +47,13 @@ public class EquipmentController {
         return new ResponseEntity<>(equipmentService.getEquipmentByPage(name ,pageNo, pageSize), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("/update/{equipmentId}")
     public ResponseEntity<EquipmentDto> updateEquipment(@PathVariable Long equipmentId, @ModelAttribute EquipmentDto equipmentDto, @ModelAttribute MultipartFile image) throws IOException {
         return new ResponseEntity<>(equipmentService.updateEquipment(equipmentId, equipmentDto, image), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/delete")
     public  ResponseEntity<String> deleteEquipment(@RequestBody IntegerArrayRequest equipmentIds) {
         equipmentService.deleteEquipment(equipmentIds.getIds());
