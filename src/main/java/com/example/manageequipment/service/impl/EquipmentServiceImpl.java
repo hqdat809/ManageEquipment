@@ -203,4 +203,14 @@ public class EquipmentServiceImpl implements EquipmentService {
 
         return equipmentResponse;
     }
+
+    @Override
+    public Object test(String name, Long ownerId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<?> data = equipmentRepository.test(name,ownerId, pageable);
+
+        return data;
+
+    }
 }

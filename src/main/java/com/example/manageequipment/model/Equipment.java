@@ -29,7 +29,6 @@ public class Equipment {
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private User owner = null;
 
-
     @ManyToMany( fetch = FetchType.LAZY)
     @JoinTable(name = "transferHistory",
             joinColumns = @JoinColumn(name = "equipment_id"),

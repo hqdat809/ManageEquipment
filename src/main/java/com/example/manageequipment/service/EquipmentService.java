@@ -25,4 +25,6 @@ public interface EquipmentService {
     UserDto transferEquipment(List<Long> equipmentIds, Long userId);
 
     EquipmentResponse getEquipmentByPage(String name, int ownerId, int pageNo, int pageSize);
+
+    Object test(String name, Long ownerId, int pageNo, int pageSize);
 }

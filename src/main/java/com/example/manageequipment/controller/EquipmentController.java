@@ -65,5 +65,13 @@ public class EquipmentController {
     public ResponseEntity<UserDto> transferEquipment(@RequestBody IntegerArrayRequest equipmentIds, @PathVariable Long userId) {
         return new ResponseEntity<>(equipmentService.transferEquipment(equipmentIds.getIds(), userId), HttpStatus.OK);
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test(@RequestParam(value = "name", defaultValue = "", required = false) String name,
+                                  @RequestParam(value = "ownerId", defaultValue = "0", required = false) Long ownerId,
+                                  @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                  @RequestParam(value = "pageSize", defaultValue = "0", required = false) int pageSize) {
+        return new ResponseEntity<>(equipmentService.test(name, ownerId ,pageNo, pageSize), HttpStatus.OK);
+    }
 }
 
