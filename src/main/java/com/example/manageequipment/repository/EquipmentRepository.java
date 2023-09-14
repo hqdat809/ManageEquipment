@@ -17,8 +17,8 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
 //    @Query("SELECT e from Equipment e where e.name like %:name%")
     List<Equipment> findByNameContaining(String name);
 
-    @Query(value = "SELECT e.* FROM equipment e WHERE NAME LIKE %:name%",
-            countQuery = "SELECT count(e.*) FROM equipment e WHERE NAME LIKE %:name%",
+    @Query(value = "SELECT * FROM equipment e WHERE NAME LIKE %:name%",
+            countQuery = "SELECT count(*) FROM equipment e WHERE NAME LIKE %:name%",
             nativeQuery = true)
     Page<Equipment> findByName(String name, Pageable pageable);
 
@@ -27,8 +27,8 @@ public interface EquipmentRepository extends JpaRepository<Equipment, Long> {
             nativeQuery = true)
     Page<Equipment> findByOwnerId(String name, Long ownerId, Pageable pageable);
 
-    @Query(value = "SELECT e.* FROM equipment e WHERE e.owner_id = :ownerId UNION ALL SELECT e.* FROM equipment e WHERE NAME LIKE %:name%",
-            countQuery = "SELECT count(e.*) FROM equipment e WHERE e.owner_id = :ownerId UNION ALL SELECT e.* FROM equipment e WHERE NAME LIKE %:name%",
+    @Query(value = "SELECT e.* FROM equipment e WHERE e.owner_id = :ownerId AND NAME LIKE %:name%",
+            countQuery = "SELECT count(e.*) FROM equipment e WHERE e.owner_id = :ownerId AND NAME LIKE %:name%",
             nativeQuery = true)
     Page<Equipment> test(String name,Long ownerId, Pageable pageable);
 }
